@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "Pixidream"
+    reviewers:
+      - "Pixidream"
+    commit-message:
+      prefix: "📦️ update(dependabot): "
+      include: "scope"
+    target-branch: "dev"
