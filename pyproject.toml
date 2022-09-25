@@ -3,7 +3,7 @@ name = "thierry"
 version = "0.0.1"
 description = "Jean Baptiste Show website backend"
 authors = ["François Lavigne Marbach <developer@studiopixidream.com>"]
-license = "MIT"
+license = "GPL-3.0"
 readme = "README.md"
 
 [tool.poetry.dependencies]
