@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "thierry"
+version = "0.0.1"
+description = "Jean Baptiste Show website backend"
+authors = ["François Lavigne Marbach <developer@studiopixidream.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.1.1"
+django-ninja = "^0.19.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
