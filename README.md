@@ -8,6 +8,8 @@
   <br />
   <img src="https://forthebadge.com/images/badges/built-with-love.svg" />
   <img src="./resources/images/made-with-django.svg" />
+  <br />
+  <img src="https://github.com/github/docs/actions/workflows/codeql-analysis.yml/badge.svg?branch=main" />
 </div>
 
 ---
