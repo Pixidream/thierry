@@ -9,7 +9,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = "^4.1.1"
-django-ninja = "^0.19.1"
+djangorestframework = "^3.14.0"
+djangorestframework-api-key = "^2.2.0"
 
 
 [build-system]
