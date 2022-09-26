@@ -1,2 +1,6 @@
 poetry.lock
 .venv/
+.vscode/
+.git/
+__pycache__/
+.mypy_cache
