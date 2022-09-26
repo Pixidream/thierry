@@ -1,0 +1,23 @@
+name: "CodeQuality"
+
+on:
+  push:
+    branches: [ "main", "beta", "dev" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: CodeQuality
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - run: pip install --upgrade pip
+    - run: curl -sSL https://install.python-poetry.org | python3 -
+    - run: poetry install
+    - run: poetry run pylint --load-plugins=pylint_django --django-settings-module=thierry.settings app/
+    - run: poetry run mypy app/
+    - run: poetry run black app/

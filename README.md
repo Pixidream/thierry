@@ -10,6 +10,8 @@
   <img src="./resources/images/made-with-django.svg" />
   <br />
   <img src="https://github.com/Pixidream/thierry/actions/workflows/codeql-analysis.yml/badge.svg?branch=main" />
+  <img src="https://github.com/Pixidream/thierry/actions/workflows/code-quality.yml/badge.svg?branch=main" />
+</div>
 </div>
 
 ---

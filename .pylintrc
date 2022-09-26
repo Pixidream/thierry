@@ -1,5 +1,7 @@
 [MASTER]
 jobs=4
-
-[pre-commit-hook]
-disable=E0401, C0301, C0415
+ignore-paths=^.github/.*$,
+             ^.venv/.*$,
+             ^.vscode/.*$,
+             ^.resources/.*$,
+             app/manage.py,
