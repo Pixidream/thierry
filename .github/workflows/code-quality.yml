@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: CodeQuality
+    name: CheckTypeAndFormatted
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
@@ -20,4 +20,14 @@ jobs:
     - run: poetry install
     - run: poetry run pylint --load-plugins=pylint_django --django-settings-module=thierry.settings app/
     - run: poetry run mypy app/
-    - run: poetry run black app/
+
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@22.8.0
+        with:
+          options: "--check --verbose"
+          src: "./app"
+          version: "22.8.0"
