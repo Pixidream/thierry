@@ -1,7 +1,7 @@
 FROM python:3.10-bullseye
 
 RUN apt update \
-    && apt install -y libpq-dev gcc python3-dev musl-dev libffi-dev zlib1g-dev zlib1g libjpeg-dev cargo libssl-dev
+    && apt install -y libpq-dev gcc python3-dev musl-dev libffi-dev zlib1g-dev zlib1g libjpeg-dev cargo libssl-dev netcat
 
 RUN useradd -ms /bin/sh thierry
 USER thierry
@@ -19,3 +19,5 @@ COPY pyproject.toml ../
 RUN poetry install
 
 COPY ./app/* .
+
+ENTRYPOINT ["/home/thierry/app/script/entrypoint.dev.sh"]
