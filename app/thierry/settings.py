@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = getenv("THIERRY_SECRET_KEY")
 
-DEBUG = int(getenv("THIERRY_DEBUG", 0))
+DEBUG = int(getenv("THIERRY_DEBUG", "0"))
 
 ALLOWED_HOSTS: List[str] = getenv("THIERRY_ALLOWED_HOSTS", "").split(";")
 
