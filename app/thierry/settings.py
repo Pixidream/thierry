@@ -54,7 +54,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "thierry.wsgi.application"
+ASGI_APPLICATION = "thierry.asgi.application"
 
 DATABASES = {
     "default": {
