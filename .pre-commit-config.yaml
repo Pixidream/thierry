@@ -21,6 +21,7 @@ repos:
       - pylint_django
       - django
       - psycopg2
+      - djangorestframework
     args: [
       --enable=unused-import,
       --fail-under=10,
