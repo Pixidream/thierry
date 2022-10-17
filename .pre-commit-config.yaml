@@ -22,6 +22,10 @@ repos:
       - django
       - psycopg2
       - djangorestframework
+      - isodate
+      - google-api-python-client
+      - google-auth-oauthlib
+      - google-auth-httplib2
     args: [
       --enable=unused-import,
       --fail-under=10,
