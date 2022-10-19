@@ -1,0 +1,32 @@
+name: "Tests"
+
+on:
+  push:
+    branches: [ "main", "beta", "dev" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-in-compose:
+    runs-on: ubuntu-latest
+    name: Tests
+    steps:
+    - uses: actions/checkout@v3
+    - uses: isbang/compose-action@v1.3.2
+      with:
+        compose-file: "./docker-compose.ci.yml"
+        down-flags: "--volumes --remove-orphans"
+
+      env:
+        YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        THIERRY_SECRET: ${{ secrets.THIERRY_SECRET }}
+        THIERRY_DEBUG: 1
+        THIERRY_ALLOWED_HOSTS: 127.0.0.1
+        THIERRY_DB_NAME: thierry_ci
+        THIERRY_DB_USERNAME: postgres
+        THIERRY_DB_PASSWORD: postgres
+        THIERRY_DB_HOST: db
+        THIERRY_DB_PORT: 5432
+        THIERRY_LANG_CODE: fr-fr
+        THIERRY_TZ: Europe/Paris
+        DEBRIEF_ACTU_PLAYLIST_ID: PLshTqKdGwawUon5GsWo-Y4HsLgVCDnm3K
