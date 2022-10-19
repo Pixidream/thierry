@@ -12,3 +12,6 @@ stop-clean: $(requirements)
 
 pre-commit: pyproject.toml
 	poetry run pre-commit run --all-files
+
+test: $(requirements)
+	docker compose -f $(dockerFile) exec web poetry run pytest
