@@ -9,12 +9,12 @@ import os
 import googleapiclient.discovery
 
 # project modules
-from core.types import PlaylistInfos
+from core.types import PlaylistInfos, VideoResponse
 
 
 class YoutubeDataApi:
     """
-    wrapper around the youtube api
+    wrapper around the YouTube api
     """
 
     def __init__(self) -> None:
@@ -30,23 +30,22 @@ class YoutubeDataApi:
 
     def get_infos(self, playlist_id: str, token: str = None) -> PlaylistInfos:
         """
-        get playlist infos from youtube api
+        get playlist infos from YouTube api
         """
-        args = dict(
-            part="contentDetails",
-            playlistId=playlist_id,
-            maxResults=50,
+        return (
+            self.client.playlistItems()  # pylint: disable=E1101
+            .list(part="contentDetails", playlistId=playlist_id, maxResults=50, pageToken=token)
+            .execute()
         )
 
-        if token:
-            args["pageToken"] = token
-
-        request = self.client.playlistItems().list(**args)  # pylint: disable=E1101
-
-        return request.execute()
-
-    def get_videos(self):
+    def get_videos(self, ids: str) -> VideoResponse:
         """
-        retrieve infos for each videos of the playlist (by group of 50 max)
+        retrieve infos for each video of the playlist (by group of 50 max)
+
+        Parameters:
+        ----------
+        ids: list of comma separated video ids
         """
-        return
+        return (
+            self.client.videos().list(part="contentDetails,snippet,status", id=ids).execute()  # pylint: disable=E1101
+        )
