@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: run compose
-        run: echo $YOUTUBE_API_KEY
+        run: docker compose -f docker-compose.ci.yml up -d --build
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           THIERRY_SECRET: ${{ secrets.THIERRY_SECRET }}
@@ -37,4 +37,4 @@ jobs:
           check-interval: 1000
 
       - name: test
-        run: docker compose -f docker-compose.ci.yml exec web poetry run pytest -p no:cacheprovider -s
+        run: docker compose -f docker-compose.ci.yml exec web poetry run pytest -p no:cacheprovider

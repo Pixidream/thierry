@@ -24,7 +24,6 @@ class YoutubeDataApi:
         self.api_service_name = "youtube"
         self.api_version = "v3"
         self.developer_key = os.getenv("YOUTUBE_API_KEY", "")
-        print(os.getenv("YOUTUBE_API_KEY"))
         self.client = googleapiclient.discovery.build(
             self.api_service_name, self.api_version, developerKey=self.developer_key
         )
