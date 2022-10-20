@@ -11,23 +11,30 @@ jobs:
     runs-on: ubuntu-latest
     name: Tests
     steps:
-    - uses: actions/checkout@v3
-    - uses: Pixidream/compose-action@main
-      with:
-        compose-file: "./docker-compose.ci.yml"
-        down-flags: "--volumes --remove-orphans"
-        exec: "poetry run pytest"
+      - name: checkout code
+        uses: actions/checkout@v3
 
-      env:
-        YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-        THIERRY_SECRET: ${{ secrets.THIERRY_SECRET }}
-        THIERRY_DEBUG: 1
-        THIERRY_ALLOWED_HOSTS: 127.0.0.1
-        THIERRY_DB_NAME: thierry_ci
-        THIERRY_DB_USERNAME: postgres
-        THIERRY_DB_PASSWORD: postgres
-        THIERRY_DB_HOST: db
-        THIERRY_DB_PORT: 5432
-        THIERRY_LANG_CODE: fr-fr
-        THIERRY_TZ: Europe/Paris
-        DEBRIEF_ACTU_PLAYLIST_ID: PLshTqKdGwawUon5GsWo-Y4HsLgVCDnm3K
+      - name: run compose
+        run: docker compose -f docker-compose.ci.yml up -d --build
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          THIERRY_SECRET: ${{ secrets.THIERRY_SECRET }}
+          THIERRY_DEBUG: 1
+          THIERRY_ALLOWED_HOSTS: 127.0.0.1
+          THIERRY_DB_NAME: thierry_ci
+          THIERRY_DB_USERNAME: postgres
+          THIERRY_DB_PASSWORD: postgres
+          THIERRY_DB_HOST: db
+          THIERRY_DB_PORT: 5432
+          THIERRY_LANG_CODE: fr-fr
+          THIERRY_TZ: Europe/Paris
+          DEBRIEF_ACTU_PLAYLIST_ID: PLshTqKdGwawUon5GsWo-Y4HsLgVCDnm3K
+
+      - name: wait for app
+        uses: Unsupervisedcom/action-wait-for-ports@v1.0.0
+        with:
+          ports: "8000"
+          check-interval: 1000
+
+      - name: test
+        run: docker compose -f docker-compose.ci.yml web poetry run pytest
