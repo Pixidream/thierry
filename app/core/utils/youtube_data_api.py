@@ -4,6 +4,7 @@ to consume in django app
 """
 # built-in
 import os
+from typing import List, Optional
 
 # third party
 import googleapiclient.discovery
@@ -28,7 +29,7 @@ class YoutubeDataApi:
             self.api_service_name, self.api_version, developerKey=self.developer_key
         )
 
-    def get_infos(self, playlist_id: str, token: str = None) -> PlaylistInfos:
+    def get_infos(self, playlist_id: str, token: Optional[str] = None) -> PlaylistInfos:
         """
         get playlist infos from YouTube api
         """
@@ -47,5 +48,40 @@ class YoutubeDataApi:
         ids: list of comma separated video ids
         """
         return (
-            self.client.videos().list(part="contentDetails,snippet,status", id=ids).execute()  # pylint: disable=E1101
+            self.client.videos()  # pylint: disable=E1101
+            .list(part="contentDetails,snippet,status", id=ids)
+            .execute()
         )
+
+    def _get_all_vids(
+        self, token: Optional[str] = None, ids: Optional[List[List[str]]] = None
+    ) -> List[str]:
+        """
+        recursive function that fetch all ids in all pages of
+        playlist infos
+        """
+        vids: List[List[str]] = ids or []
+        infos = self.get_infos(os.getenv("DEBRIEF_ACTU_PLAYLIST_ID", ""), token=token)
+
+        vids.append([])
+        vids[-1].extend(item["contentDetails"]["videoId"] for item in infos["items"])
+
+        if "nextPageToken" in infos:
+            self._get_all_vids(infos.get("nextPageToken"), vids)
+
+        return [",".join(id_list) for id_list in vids]
+
+    def serialize_debriefs_from_api(self):
+        """
+        fetch all videos from the YouTube Data API
+        create dict that represent Debrief Model,
+        parse the description to get title and tags
+        """
+        actus = []
+        tag_regex = r"^-(?P<tag>[\w\s]+)-?$\n(?P<time_code>[\d{2}:]{4,8})"
+        title_regex = r"^(?P<time_code>[\d{2}:]{4,8})\s(?P<title>.*)$"
+
+        vids = self._get_all_vids()
+        videos = [self.get_videos(vid) for vid in vids]
+
+        print(videos, actus, tag_regex, title_regex)

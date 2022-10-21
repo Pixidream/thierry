@@ -38,11 +38,14 @@ class YoutubeDataApiTest(TestCase):
         infos = self.yt_api.get_infos(getenv("DEBRIEF_ACTU_PLAYLIST_ID"))
         items = infos["items"]
 
-        ids = []
-        for item in items:
-            ids.append(item["contentDetails"]["videoId"])
-
+        ids = [item["contentDetails"]["videoId"] for item in items]
         videos = self.yt_api.get_videos(",".join(ids))
 
         self.assertEqual(videos["kind"], "youtube#videoListResponse")
-        self.assertTrue(len(videos["items"]) == len(ids) - 1)
+        self.assertTrue(len(videos["items"]) == len(ids))
+
+    def test_serialize_debrief_from_api(self):
+        """
+        check that the first returned item can create a Debrief / Tag / Title object
+        """
+        self.yt_api.serialize_debriefs_from_api()

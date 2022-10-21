@@ -5,12 +5,24 @@ handle types for YouTube Data API
 from typing import TypedDict, List, Dict
 
 
+class PlaylistContentDetails(TypedDict):
+    """
+    represent contentDetails part of playlist list
+    """
+
+    videoId: str
+    startAt: str
+    endAt: str
+    note: str
+    videoPublishedAt: str
+
+
 class PlaylistItem(TypedDict):
     """
     represent playlist item returned by YouTube Data API
     """
 
-    contentDetails: Dict[str, str]
+    contentDetails: PlaylistContentDetails
     etag: str
     id: str
     kind: str
