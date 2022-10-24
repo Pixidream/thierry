@@ -2,7 +2,7 @@ name: "Tests"
 
 on:
   push:
-    branches: [ "main", "beta", "dev" ]
+    branches: [ "main", "beta" ]
   pull_request:
     branches: [ "main" ]
 
