@@ -53,3 +53,23 @@ class TestDebriefActu(TestCase):
                 vid="toto", title="toto", release_date="2022-12-12", thumbnail="https://google.com"
             ),
         )
+
+    def test_03_update_debrief(self):
+        """
+        test model update
+        """
+        updated = DebriefActu.objects.filter(vid="toto").update(title="updated toto")
+
+        self.assertEqual(updated, 1)
+
+        debrief = DebriefActu.objects.get(vid="toto")
+
+        self._assert_debrief(
+            debrief,
+            dict(
+                vid="toto",
+                title="updated toto",
+                release_date="2022-12-12",
+                thumbnail="https://google.com",
+            ),
+        )
