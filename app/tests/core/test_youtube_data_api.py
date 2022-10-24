@@ -1,0 +1,59 @@
+"""tests/core/test_youtube_data_api.py
+unittest methods from app/core/utils/youtube_data_api.py
+"""
+# built in
+from unittest import TestCase
+from os import getenv
+
+# project modules
+from core.utils import YoutubeDataApi
+
+
+class YoutubeDataApiTest(TestCase):
+    """
+    class that handle all tests
+    """
+
+    def setUp(self) -> None:
+        """
+        Method called to prepare the test fixture
+        """
+        self.yt_api = YoutubeDataApi()
+
+    def test_get_infos(self):
+        """
+        run the get_infos method and check that kind is valid
+        and then that there is a least on item returned
+        """
+        infos = self.yt_api.get_infos(getenv("DEBRIEF_ACTU_PLAYLIST_ID"))
+        self.assertEqual(infos["kind"], "youtube#playlistItemListResponse")
+        self.assertTrue(len(infos["items"]) > 0)
+
+    def test_get_videos(self):
+        """
+        get videos corresponding to ids returned by get infos.
+        check that response type is ok
+        check that the number of returned videos match the number of send ids
+        """
+        infos = self.yt_api.get_infos(getenv("DEBRIEF_ACTU_PLAYLIST_ID"))
+        items = infos["items"]
+
+        ids = [item["contentDetails"]["videoId"] for item in items]
+        videos = self.yt_api.get_videos(",".join(ids))
+
+        self.assertEqual(videos["kind"], "youtube#videoListResponse")
+        self.assertTrue(len(videos["items"]) == len(ids))
+
+    def test_serialize_debrief_from_api(self):
+        """
+        check that the first returned item can create a Debrief / Tag / Title object
+        """
+        debriefs = self.yt_api.serialize_debriefs_from_api()
+
+        test_actu = next((debrief for debrief in debriefs if debrief["vid"] == "yol-kVahVWQ"), None)
+
+        self.assertFalse(test_actu is None)
+        self.assertEqual(test_actu["vid"], "yol-kVahVWQ")
+        self.assertEqual(test_actu["release_date"], "2022-10-20T16:00:44Z")
+        self.assertTrue(len(test_actu["tags"]) > 0)
+        self.assertTrue(len(test_actu["titles"]) > 0)

@@ -17,7 +17,21 @@ repos:
   rev: v2.15.3
   hooks:
   - id: pylint
-    args: [--disable=all, --enable=unused-import]
+    additional_dependencies:
+      - pylint_django
+      - django
+      - psycopg2
+      - djangorestframework
+      - isodate
+      - google-api-python-client
+      - google-auth-oauthlib
+      - google-auth-httplib2
+    args: [
+      --enable=unused-import,
+      --fail-under=10,
+      --load-plugins=pylint_django,
+      --django-settings-module=thierry.settings
+    ]
 
 - repo: https://github.com/pre-commit/pygrep-hooks
   rev: v1.9.0
@@ -29,4 +43,5 @@ repos:
   hooks:
   - id: mypy
     additional_dependencies:
-    - django-stubs
+    - psycopg2
+    - djangorestframework

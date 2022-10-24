@@ -1,5 +1,7 @@
-"""thierry URL Configuration
 """
+thierry URL Configuration
+"""
+# third party
 from django.contrib import admin
 from django.urls import path
 

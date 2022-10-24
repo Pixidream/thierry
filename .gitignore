@@ -4,3 +4,6 @@ poetry.lock
 .git/
 __pycache__/
 .mypy_cache
+.env.dev
+.idea/
+.fleet/
