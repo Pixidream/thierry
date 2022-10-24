@@ -43,5 +43,5 @@ repos:
   hooks:
   - id: mypy
     additional_dependencies:
-    - django-stubs
     - psycopg2
+    - djangorestframework
