@@ -48,4 +48,12 @@ class YoutubeDataApiTest(TestCase):
         """
         check that the first returned item can create a Debrief / Tag / Title object
         """
-        self.yt_api.serialize_debriefs_from_api()
+        debriefs = self.yt_api.serialize_debriefs_from_api()
+
+        test_actu = next((debrief for debrief in debriefs if debrief["vid"] == "yol-kVahVWQ"), None)
+
+        self.assertFalse(test_actu is None)
+        self.assertEqual(test_actu["vid"], "yol-kVahVWQ")
+        self.assertEqual(test_actu["release_date"], "2022-10-20T16:00:44Z")
+        self.assertTrue(len(test_actu["tags"]) > 0)
+        self.assertTrue(len(test_actu["titles"]) > 0)

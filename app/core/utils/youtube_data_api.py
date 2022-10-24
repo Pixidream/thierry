@@ -4,13 +4,15 @@ to consume in django app
 """
 # built-in
 import os
-from typing import List, Optional
+from typing import List, Optional, Tuple
+from re import findall, MULTILINE
 
 # third party
 import googleapiclient.discovery
+from isodate import parse_duration
 
 # project modules
-from core.types import PlaylistInfos, VideoResponse
+from core.types import PlaylistInfos, VideoResponse, DebriefActus, Title, Tag
 
 
 class YoutubeDataApi:
@@ -71,17 +73,61 @@ class YoutubeDataApi:
 
         return [",".join(id_list) for id_list in vids]
 
-    def serialize_debriefs_from_api(self):
+    def serialize_debriefs_from_api(self) -> List[DebriefActus]:
         """
         fetch all videos from the YouTube Data API
         create dict that represent Debrief Model,
         parse the description to get title and tags
         """
-        actus = []
-        tag_regex = r"^-(?P<tag>[\w\s]+)-?$\n(?P<time_code>[\d{2}:]{4,8})"
-        title_regex = r"^(?P<time_code>[\d{2}:]{4,8})\s(?P<title>.*)$"
-
+        actus: List[DebriefActus] = []
         vids = self._get_all_vids()
         videos = [self.get_videos(vid) for vid in vids]
 
-        print(videos, actus, tag_regex, title_regex)
+        for video in videos:
+            for item in video["items"]:
+                actu: DebriefActus = {
+                    "vid": item["id"],
+                    "title": item["snippet"]["title"],
+                    "release_date": item["snippet"]["publishedAt"],
+                    "thumbnail": (
+                        item["snippet"]["thumbnails"]["maxres"]["url"]
+                        if "maxres" in item["snippet"]["thumbnails"]
+                        else item["snippet"]["thumbnails"]["high"]["url"]
+                    ),
+                    "tags": [],
+                    "titles": [],
+                }
+                duration = str(parse_duration(item["contentDetails"]["duration"]))
+                tags: List[Tuple[str, str]] = findall(
+                    r"^-(?P<tag>[\w\s]+)-?$\n(?P<time_code>[\d{2}:]{4,8})",
+                    item["snippet"]["description"],
+                    MULTILINE,
+                )
+                titles: List[Tuple[str, str]] = findall(
+                    r"^(?P<time_code>[\d{2}:]{4,8})\s(?P<title>.*)$",
+                    item["snippet"]["description"],
+                    MULTILINE,
+                )
+                for index, tag in enumerate(tags):
+                    new_tag: Tag = {"name": tag[0], "start_at": tag[1], "end_at": ""}
+                    if index == len(tags) - 1:
+                        new_tag.update({"end_at": duration})
+                        actu["tags"].append(new_tag)
+                        continue
+
+                    new_tag.update({"end_at": tags[index + 1][1]})
+                    actu["tags"].append(new_tag)
+
+                for index, title in enumerate(titles):
+                    new_title: Title = {"name": title[1], "start_at": title[0], "end_at": ""}
+                    if index == len(titles) - 1:
+                        new_title.update({"end_at": duration})
+                        actu["titles"].append(new_title)
+                        continue
+
+                    new_title.update({"end_at": titles[index + 1][0]})
+                    actu["titles"].append(new_title)
+
+                actus.append(actu)
+
+        return actus

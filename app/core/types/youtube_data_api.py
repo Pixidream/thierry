@@ -49,7 +49,7 @@ class VideoSnippet(TypedDict):
     channelId: str
     title: str
     description: str
-    thumbnails: Dict[str, str]
+    thumbnails: Dict[str, Dict[str, str]]
     channelTitle: str
     tags: List[str]
     categoryId: str
@@ -126,3 +126,36 @@ class VideoResponse(TypedDict):
     prevPageToken: str
     pageInfo: Dict[str, int]
     items: List[VideoItem]
+
+
+class Tag(TypedDict):
+    """
+    tag dict created while parsing videos
+    """
+
+    name: str
+    start_at: str
+    end_at: str
+
+
+class Title(TypedDict):
+    """
+    title dict created while parsing videos
+    """
+
+    name: str
+    start_at: str
+    end_at: str
+
+
+class DebriefActus(TypedDict):
+    """
+    DebriefActu dict created while parsing videos
+    """
+
+    release_date: str
+    tags: List[Tag]
+    thumbnail: str
+    title: str
+    titles: List[Title]
+    vid: str

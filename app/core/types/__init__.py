@@ -10,4 +10,7 @@ from .youtube_data_api import (
     VideoContentDetails,
     VideoStatistics,
     VideoResponse,
+    Tag,
+    Title,
+    DebriefActus,
 )
