@@ -14,7 +14,7 @@ pre-commit: pyproject.toml
 	poetry run pre-commit run --all-files
 
 test: $(requirements)
-	docker compose -f $(dockerFile) exec web poetry run pytest
+	docker compose -f $(dockerFile) exec web /bin/bash -c "cd ../ && poetry run pytest"
 
 updatedebriefs: $(requirements)
 	docker compose -f $(dockerFile) exec web poetry run python manage.py updatedebriefs

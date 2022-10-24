@@ -19,5 +19,6 @@ COPY pyproject.toml ../
 RUN poetry install
 
 COPY ./app/* ./
+COPY ./pytest.ini ../
 
 ENTRYPOINT ["/home/thierry/app/script/entrypoint.dev.sh"]
