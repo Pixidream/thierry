@@ -74,7 +74,7 @@ class TestDebriefActu(TestCase):
             ),
         )
 
-    def test_05_delete_update_debrief(self):
+    def test_04_delete_update_debrief(self):
         """
         test that object is correctly removed from database
         """
