@@ -25,14 +25,14 @@ class TestDebriefActu(TestCase):
             "thumbnail": "https://i.ytimg.com/vi/yol-kVahVWQ/hqdefault.jpg",
         }
         DebriefActu.objects.create(
-            vid="toto", title="toto", release_date="12-12-2022", thumbnail="https://google.com"
+            vid="toto", title="toto", release_date="2022-12-12", thumbnail="https://google.com"
         )
 
     def _assert_debrief(self, debrief: DebriefActu, params: Dict[str, str]):
         self.assertIsInstance(debrief, DebriefActu)
         self.assertEqual(params["vid"], debrief.vid)
         self.assertEqual(params["title"], debrief.title)
-        self.assertEqual(params["release_date"], debrief.release_date)
+        self.assertEqual(params["release_date"], str(debrief.release_date))
         self.assertEqual(params["thumbnail"], debrief.thumbnail)
 
     def test_01_create_debrief(self):
@@ -50,6 +50,6 @@ class TestDebriefActu(TestCase):
         self._assert_debrief(
             debrief,
             dict(
-                vid="toto", title="toto", release_date="12-12-2022", thumbnail="https://google.com"
+                vid="toto", title="toto", release_date="2022-12-12", thumbnail="https://google.com"
             ),
         )
