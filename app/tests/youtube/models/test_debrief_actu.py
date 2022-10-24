@@ -73,3 +73,10 @@ class TestDebriefActu(TestCase):
                 thumbnail="https://google.com",
             ),
         )
+
+    def test_05_delete_update_debrief(self):
+        """
+        test that object is correctly removed from database
+        """
+        DebriefActu.objects.get(vid="toto").delete()
+        self.assertRaises(DebriefActu.DoesNotExist, lambda: DebriefActu.objects.get(vid="toto"))
