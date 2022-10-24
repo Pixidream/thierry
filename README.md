@@ -11,7 +11,7 @@
   <br />
   <img src="https://github.com/Pixidream/thierry/actions/workflows/codeql-analysis.yml/badge.svg?branch=main" />
   <img src="https://github.com/Pixidream/thierry/actions/workflows/code-quality.yml/badge.svg?branch=main" />
-</div>
+  <img src="https://github.com/Pixidream/thierry/actions/workflows/tests.yml/badge.svg?branch=main" />
 </div>
 
 ---
