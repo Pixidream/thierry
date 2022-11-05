@@ -13,7 +13,7 @@ class TitleSerializer(ModelSerializer):
     map model fields to serializer fields
     """
 
-    videos = HyperlinkedRelatedField(read_only=True, view_name="video")
+    video = HyperlinkedRelatedField(read_only=True, view_name="video")
 
     class Meta:
         """
