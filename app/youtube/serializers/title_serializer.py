@@ -13,6 +13,21 @@ class TitleSerializer(ModelSerializer):
     map model fields to serializer fields
     """
 
+    class Meta:
+        """
+        configure serializer
+        """
+
+        model = Title
+        exclude = ["video"]
+
+
+class TitleDebriefSerializer(ModelSerializer):
+    """
+    map model fields to serializer fields
+    also hyperlink video field
+    """
+
     video = HyperlinkedRelatedField(read_only=True, view_name="video")
 
     class Meta:
