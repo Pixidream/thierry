@@ -2,7 +2,8 @@
 handle types for YouTube Data API
 """
 # built-in
-from typing import TypedDict, List, Dict
+from typing import List, Dict
+from typing_extensions import NotRequired, TypedDict
 
 
 class PlaylistContentDetails(TypedDict):
@@ -154,8 +155,8 @@ class DebriefActus(TypedDict):
     """
 
     release_date: str
-    tags: List[Tag]
+    tags: NotRequired[List[Tag]]
     thumbnail: str
     title: str
-    titles: List[Title]
+    titles: NotRequired[List[Title]]
     vid: str
