@@ -107,3 +107,10 @@ INSTALLED_APPS = [
 
 # ------------ Authentication -------------
 AUTH_USER_MODEL = "user.User"
+
+# ------------ REST Framework -------------
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 16,
+    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.AcceptHeaderVersioning",
+}
