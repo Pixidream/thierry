@@ -42,7 +42,7 @@ class YoutubeDataApiTest(TestCase):
         videos = self.yt_api.get_videos(",".join(ids))
 
         self.assertEqual(videos["kind"], "youtube#videoListResponse")
-        self.assertTrue(len(videos["items"]) == len(ids))
+        self.assertTrue(0 < len(videos["items"]) <= len(ids))
 
     def test_serialize_debrief_from_api(self):
         """
