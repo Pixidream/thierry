@@ -22,25 +22,30 @@
   <br />
   <br />
   <div>
-  <div>
-    <a href="https://shop.spreadshirt.fr/jeanbaptisteshow/hommes?q=D1" target="_blank">
-      <img src="./resources/images/tshirt.png" />
-    </a>
-    <a href="https://www.tipeee.com/jean-baptiste-show" target="_blank">
-      <img src="./resources/images/tipee.png" />
-    </a>
+    <div align="center">
+      <a href="https://shop.spreadshirt.fr/jeanbaptisteshow/hommes?q=D1" target="_blank">
+        <img src="./resources/images/tshirt.png" />
+      </a>
+      <a href="https://www.tipeee.com/jean-baptiste-show" target="_blank">
+        <img src="./resources/images/tipee.png" />
+      </a>
     </div>
-    <div>
-    <a href="https://streamlabs.com/jeanbaptisteshow" target="_blank">
-      <img src="./resources/images/donate.png" />
-    </a>
-    <a href="http://bit.ly/OALMUB" target="_blank">
-      <img src="./resources/images/twitter.png" />
-    </a>
+    <div align="center">
+      <a href="https://streamlabs.com/jeanbaptisteshow" target="_blank">
+        <img src="./resources/images/donate.png" />
+      </a>
+      <a href="http://bit.ly/OALMUB" target="_blank">
+        <img src="./resources/images/twitter.png" />
+      </a>
     </div>
-    <a href="https://discord.com/invite/aQtFyQk" target="_blank">
-      <img src="https://discordapp.com/api/guilds/595603581349134346/widget.png?style=banner2" alt="Discord Banner 2"/>
-    </a>
+    <div align="center">
+      <a href="https://discord.com/invite/aQtFyQk" target="_blank">
+        <img src="https://discordapp.com/api/guilds/595603581349134346/widget.png?style=banner2" alt="Discord Banner 2"/>
+      </a>
+      <a href="https://twitch.tv/jeanbaptisteshow" target="_blank" style="margin-left: 2rem;">
+        <img src="./resources/images/twitch.svg" width="260"/>
+      </a>
+    </div>
   </div>
 </div>
 
