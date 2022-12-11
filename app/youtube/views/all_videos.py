@@ -3,13 +3,14 @@ return all videos stored in database (paginated)
 """
 # third party
 from rest_framework.decorators import api_view
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.status import HTTP_406_NOT_ACCEPTABLE
 
 # project modules
 from youtube.models import DebriefActu
 from youtube.serializers import DebriefSerializer
+
+from core.utils import Pagination
 
 
 @api_view()
@@ -28,7 +29,7 @@ def all_videos(request):
             {"error": f"version {request.version} not supported"}, HTTP_406_NOT_ACCEPTABLE
         )
 
-    paginator = PageNumberPagination()
+    paginator = Pagination()
     debriefs = DebriefActu.objects.all().order_by("-release_date")
     paginated_debriefs = paginator.paginate_queryset(debriefs, request)
     serializer = DebriefSerializer(paginated_debriefs, many=True)
