@@ -102,6 +102,7 @@ INSTALLED_APPS = [
     # project pass
     "user",
     "youtube",
+    "game",
 ]
 
 

@@ -14,3 +14,5 @@ from .youtube_data_api import (
     Title,
     DebriefActus,
 )
+
+from .game_pass_api import Category
