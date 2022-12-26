@@ -1,8 +1,0 @@
-[MASTER]
-jobs=4
-ignore-paths=^.github/.*$,
-             ^.venv/.*$,
-             ^.vscode/.*$,
-             ^.resources/.*$,
-             app/manage.py,
-             .*/migrations/*,

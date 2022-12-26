@@ -12,26 +12,13 @@ repos:
   hooks:
   - id: black
 
-- repo: https://github.com/PyCQA/pylint
-  rev: v2.15.3
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  # Ruff version.
+  rev: 'v0.0.193'
   hooks:
-  - id: pylint
-    additional_dependencies:
-      - pylint_django
-      - django
-      - psycopg2
-      - djangorestframework
-      - isodate
-      - google-api-python-client
-      - google-auth-oauthlib
-      - google-auth-httplib2
-      - typing_extensions
-    args: [
-      --enable=unused-import,
-      --fail-under=10,
-      --load-plugins=pylint_django,
-      --django-settings-module=thierry.settings
-    ]
+    - id: ruff
+      # Respect `exclude` and `extend-exclude` settings.
+      args: ["--force-exclude"]
 
 - repo: https://github.com/pre-commit/pygrep-hooks
   rev: v1.9.0
